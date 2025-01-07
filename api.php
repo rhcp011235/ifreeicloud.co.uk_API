@@ -9,7 +9,6 @@ if (isset($_POST['imeis'])) {
         //check_imei($myCheck);
     }
 }
-die;
 
 $myCheck["service"] = 4; // FMI ON / OFF CHECK $0.1 each check
 $myCheck["imei"] = ""; // BLANK IMEI
