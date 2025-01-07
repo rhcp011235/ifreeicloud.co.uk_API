@@ -7,7 +7,7 @@ if (isset($_POST['imeis'])) {
             "imei" => $imei,
             "key" => "API_KEY" // YOUR API KEY
         ];
-        echo $imei . "<br>";
+        //echo $imei . "<br>";
         check_imei($myCheck);
     }
 }
@@ -29,7 +29,7 @@ function check_imei($myCheck)
         echo "Error: $myResult->error";
     } else {
         echo $myResult->response;
-        echo "<hr><pre>" . print_r($myResult->object, true) . "</pre><hr>"; // TEST ONLY
+        //echo "<hr><pre>" . print_r($myResult->object, true) . "</pre><hr>"; // TEST ONLY
         // Here you can access specific info!
         // echo $myResult->object->model;
     }
