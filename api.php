@@ -1,4 +1,6 @@
 <?php
+var_dump($_POST);
+die;
 
 $myCheck["service"] = 4; // FMI ON / OFF CHECK $0.1 each check
 $myCheck["imei"] = ""; // BLANK IMEI
