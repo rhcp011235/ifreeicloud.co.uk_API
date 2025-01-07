@@ -1,5 +1,6 @@
 <?php
-global $API_KEY = ''; // YOUR API KEY
+
+$API_KEY = ''; // YOUR API KEY
 
 if (isset($_POST['imeis'])) {
     $imeis = preg_split('/\s+/', trim($_POST['imeis']));
@@ -7,7 +8,7 @@ if (isset($_POST['imeis'])) {
         $myCheck = [
             "service" => 4, // FMI ON / OFF CHECK $0.1 each check
             "imei" => $imei,
-            "key" => "$API_KEY" // YOUR API KEY
+            "key" => $API_KEY // YOUR API KEY
         ];
         check_imei($myCheck);
     }
@@ -37,9 +38,10 @@ function check_imei($myCheck)
 
 function check_balance()
 {
-    $myCheck = [
-        "key" => "$API_KEY", // YOUR API KEY
-        "accountinfo" => "balance"
+global $API_KEY;
+$myCheck = [
+    "key" => $API_KEY, // YOUR API KEY
+    "accountinfo" => "balance"
 ];
 
 $ch = curl_init("https://api.ifreeicloud.co.uk");
