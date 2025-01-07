@@ -1,5 +1,14 @@
 <?php
-var_dump($_POST);
+//var_dump($_POST);
+if (isset($_POST['imeis'])) {
+    $imeis = explode(' ', $_POST['imeis']);
+    foreach ($imeis as $imei) {
+        $myCheck["imei"] = $imei;
+        var_dump($imei);
+        return 0;
+        //check_imei($myCheck);
+    }
+}
 die;
 
 $myCheck["service"] = 4; // FMI ON / OFF CHECK $0.1 each check
