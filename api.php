@@ -1,5 +1,5 @@
 <?php
-$API_KEY = ''; // YOUR API KEY
+global $API_KEY = ''; // YOUR API KEY
 
 if (isset($_POST['imeis'])) {
     $imeis = preg_split('/\s+/', trim($_POST['imeis']));
