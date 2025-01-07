@@ -4,8 +4,7 @@ if (isset($_POST['imeis'])) {
     $imeis = explode(' ', $_POST['imeis']);
     foreach ($imeis as $imei) {
         $myCheck["imei"] = $imei;
-        var_dump($imei);
-        return 0;
+        echo $imei . "<br>";
         //check_imei($myCheck);
     }
 }
