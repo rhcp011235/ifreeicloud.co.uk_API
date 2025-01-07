@@ -1,7 +1,7 @@
 <?php
 //var_dump($_POST);
 if (isset($_POST['imeis'])) {
-    $imeis = explode(' ', $_POST['imeis']);
+    $imeis = preg_split('/\s+/', trim($_POST['imeis']));
     foreach ($imeis as $imei) {
         $myCheck["imei"] = $imei;
         echo $imei . "<br>";
