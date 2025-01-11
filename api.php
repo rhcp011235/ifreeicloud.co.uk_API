@@ -39,11 +39,20 @@
             ];
 
             // check model
+            echo "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+            echo "<h2>Model Information</h2>";
+            echo "<p>";
             check_model($myCheck);
+            echo "</p>";
+            echo "</div>";
 
             // check FMI status 
+            echo "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+            echo "<h2>FMI Status</h2>";
+            echo "<p>";
             check_imei($myCheck);
-        }
+            echo "</p>";
+            echo "</div>";    }
     }
     // check balance of the API KEY
     check_balance();
