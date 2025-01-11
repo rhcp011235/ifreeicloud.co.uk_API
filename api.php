@@ -122,6 +122,7 @@
         } else {
             #echo $myResult->response;
             echo $myResult->object->model;
+            echo "<BR><BR>";
             return;
         }
     }
