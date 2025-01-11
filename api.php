@@ -96,15 +96,16 @@
     function check_model($myCheck)
     {
         global $API_KEY;
-        $myCheck = [
+        $myCheck2 = [
             "key" => $API_KEY, // YOUR API KEY
             "service"  => '0',
-            "accountinfo" => "balance"
+            "imei" => $myCheck['imei']
+           
         ];
         var_dump($myCheck);
         die();
         $ch = curl_init("https://api.ifreeicloud.co.uk");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
