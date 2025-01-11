@@ -102,8 +102,7 @@
             "imei" => $myCheck['imei']
            
         ];
-        var_dump($myCheck);
-        die();
+       
         $ch = curl_init("https://api.ifreeicloud.co.uk");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -119,6 +118,7 @@
             echo "Error: $myResult->error";
         } else {
             echo $myResult->response;
+            die;
         }
     }
     ?>
