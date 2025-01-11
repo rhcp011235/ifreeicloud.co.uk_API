@@ -88,8 +88,10 @@
             echo "Error: HTTP Code $httpcode";
         } elseif ($myResult->success !== true) {
             echo "Error: $myResult->error";
+            return;
         } else {
             echo $myResult->response; // Human-readable
+            return;
         }
     }
 
@@ -116,10 +118,11 @@
             echo "Error: HTTP Code $httpcode";
         } elseif ($myResult->success !== true) {
             echo "Error: $myResult->error";
+            return;
         } else {
             #echo $myResult->response;
             echo $myResult->object->model;
-            
+            return;
         }
     }
     ?>
