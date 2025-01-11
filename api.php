@@ -54,8 +54,15 @@
             echo "</p>";
             echo "</div>";    }
     }
+    
     // check balance of the API KEY
+    echo "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+    echo "<h2>Balance of API KEY</h2>";
+    echo "<p>";        
     check_balance();
+    echo "</p>";
+    echo "</div>";
+
 
     function check_imei($myCheck)
     {
