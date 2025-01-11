@@ -118,7 +118,7 @@
             echo "Error: $myResult->error";
         } else {
             #echo $myResult->response;
-            echo $myResult->object->model
+            echo $myResult->object->model;
             die;
         }
     }
