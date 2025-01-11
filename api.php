@@ -119,7 +119,7 @@
         } else {
             #echo $myResult->response;
             echo $myResult->object->model;
-            die;
+            
         }
     }
     ?>
