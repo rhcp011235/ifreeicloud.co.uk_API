@@ -37,6 +37,11 @@
                 "imei" => $imei,
                 "key" => $API_KEY // YOUR API KEY
             ];
+
+            // check model
+            check_model($myCheck);
+
+            // check FMI status 
             check_imei($myCheck);
         }
     }
@@ -85,6 +90,34 @@
             echo "Error: $myResult->error";
         } else {
             echo $myResult->response; // Human-readable
+        }
+    }
+
+    function check_model($myCheck)
+    {
+        global $API_KEY;
+        $myCheck = [
+            "key" => $API_KEY, // YOUR API KEY
+            "service"  => '0',
+            "accountinfo" => "balance"
+        ];
+        var_dump($myCheck);
+        die();
+        $ch = curl_init("https://api.ifreeicloud.co.uk");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        $myResult = json_decode(curl_exec($ch));
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpcode != 200) {
+            echo "Error: HTTP Code $httpcode";
+        } elseif ($myResult->success !== true) {
+            echo "Error: $myResult->error";
+        } else {
+            echo $myResult->response;
         }
     }
     ?>
