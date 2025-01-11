@@ -117,7 +117,8 @@
         } elseif ($myResult->success !== true) {
             echo "Error: $myResult->error";
         } else {
-            echo $myResult->response;
+            #echo $myResult->response;
+            echo $myResult->object->model
             die;
         }
     }
