@@ -197,12 +197,48 @@ function check_imei($myCheck) {
 // Function to check model
 function check_model($myCheck) {
     global $apiKeys;
+
+    // Add error checking for required keys
+    if (!isset($myCheck['key']) || !isset($myCheck['imei'])) {
+        throw new Exception("Missing required keys: 'key' or 'imei'");
+    }
+
     $myCheck2 = [
         "key" => $myCheck['key'], // Use the selected API key
         "service"  => '0',
         "imei" => $myCheck['imei']
     ];
 
+    // Use optimal options for curl to preserve newlines and handle XML responses
+    $options = [
+        CURLOPT_POST,
+        $myCheck2,
+        CURLOPT_RETURNTRANSFER,
+        CURLOPT Krhtml, // For XML output
+        CURLOPT_OPTOUTLINES, // Preserve newlines in output
+        60,              // Connection timeout in seconds
+        60               // Response timeout in seconds
+    ];
+
+    try {
+        $ch = curl_init("https://api.ifreeicloud.co.uk");
+        curl_setopt($ch, $options);
+        $result = json_decode(curl_exec($ch), true);
+
+        // Add error checking for JSON decoding issues
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception("Invalid JSON response from server: " . json_last_error());
+        }
+
+        echo "<span class='success'>Successfully retrieved model information</span>";
+        echo "<br>";
+        echo $result;
+} catch (Exception $e) {
+    echo "<span class='error'><strong>Error:</strong> " . $e->getMessage() . "</span>";
+}
+
+
+    /*
     $ch = curl_init("https://api.ifreeicloud.co.uk");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck2);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -219,5 +255,6 @@ function check_model($myCheck) {
     } else {
         echo $myResult->object->model;
     }
+        */
 }
 ?>
