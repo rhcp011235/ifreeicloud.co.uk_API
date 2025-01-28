@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMEI Submission Form</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007AFF;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #005BB5;
+        }
+        .balance-info {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- Display API Key Balances -->
+        <div class="balance-info" id="balance-info">
+            <h3>API Key Balances</h3>
+            <p>Loading balances...</p>
+        </div>
+
+        <!-- Form for IMEI Submission -->
+        <form action="api2.php" method="post">
+            <label for="api-key">Select API Key:</label>
+            <select id="api-key" name="api-key" required>
+                <option value="">-- Select an API Key --</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+
+            <label for="imeis">Enter IMEIs:</label>
+            <textarea id="imeis" name="imeis" placeholder="Enter IMEIs here..." required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Fetch API key balances and populate the dropdown
+        async function fetchBalances() {
+            try {
+                const response = await fetch('api2.php?action=get_balances');
+                const data = await response.json();
+
+                if (data.success) {
+                    const balanceInfo = document.getElementById('balance-info');
+                    const apiKeySelect = document.getElementById('api-key');
+
+                    // Clear existing content
+                    balanceInfo.innerHTML = '<h3>API Key Balances</h3>';
+                    apiKeySelect.innerHTML = '<option value="">-- Select an API Key --</option>';
+
+                    // Display balances and populate dropdown
+                    data.balances.forEach((balance, index) => {
+                        // Add balance info
+                       // balanceInfo.innerHTML += `<p><strong>${balance.key}:</strong> ${balance.balance}</p>`;
+
+                        // Add option to dropdown
+                        const option = document.createElement('option');
+                        option.value = balance.key;
+                        option.textContent = `${balance.key} (${balance.balance})`;
+                        apiKeySelect.appendChild(option);
+                    });
+                } else {
+                    document.getElementById('balance-info').innerHTML = `<p>Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('balance-info').innerHTML = `<p>Error fetching balances: ${error.message}</p>`;
+            }
+        }
+
+        // Fetch balances when the page loads
+        fetchBalances();
+    </script>
+</body>
+</html>
