@@ -143,6 +143,14 @@ if (isset($_POST['imeis']) && isset($_POST['api-key'])) {
         echo "</div>";
     }
 
+    echo "<div class='result-container'>";
+    echo "<h3>API Key Balance</h3>";
+    echo "<p>";
+    echo check_balance_for_key($apiKeys[$selectedApiKey]);
+    echo "</p>";
+    echo "</div>";
+
+        
     // End styled output
     echo "</body>
     </html>";
