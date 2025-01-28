@@ -85,42 +85,6 @@ if (isset($_POST['imeis']) && isset($_POST['api-key'])) {
     $selectedApiKey = $_POST['api-key'];
     $imeis = preg_split('/\s+/', trim($_POST['imeis']));
 
-    // Start styled output
-    echo "<!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>IMEI Check Results</title>
-        <style>
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                background-color: #f4f4f4;
-                padding: 20px;
-            }
-            .result-container {
-                background: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                margin-bottom: 20px;
-            }
-            h2 {
-                color: #333;
-                margin-bottom: 10px;
-            }
-            p {
-                color: #555;
-                margin: 5px 0;
-            }
-            .error {
-                color: #ff0000;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>";
-
     foreach ($imeis as $imei) {
         $myCheck = [
             "service" => 4, // FMI ON / OFF CHECK $0.1 each check
@@ -129,24 +93,21 @@ if (isset($_POST['imeis']) && isset($_POST['api-key'])) {
         ];
 
         // Check model
-        echo "<div class='result-container'>";
-        echo "<h2>IMEI: $imei</h2>";
-        echo "<h3>Model Information</h3>";
+        echo "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+        echo "<h2>Model Information</h2>";
         echo "<p>";
         check_model($myCheck);
         echo "</p>";
+        echo "</div>";
 
         // Check FMI status
-        echo "<h3>FMI Status</h3>";
+        echo "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+        echo "<h2>FMI Status</h2>";
         echo "<p>";
         check_imei($myCheck);
         echo "</p>";
         echo "</div>";
     }
-
-    // End styled output
-    echo "</body>
-    </html>";
 }
 
 // Function to check IMEI
@@ -161,9 +122,9 @@ function check_imei($myCheck) {
     curl_close($ch);
 
     if ($httpcode != 200) {
-        echo "<span class='error'>Error: HTTP Code $httpcode</span>";
+        echo "Error: HTTP Code $httpcode";
     } elseif ($myResult->success !== true) {
-        echo "<span class='error'>Error: $myResult->error</span>";
+        echo "Error: $myResult->error";
     } else {
         echo $myResult->response;
     }
@@ -188,11 +149,12 @@ function check_model($myCheck) {
     curl_close($ch);
 
     if ($httpcode != 200) {
-        echo "<span class='error'>Error: HTTP Code $httpcode</span>";
+        echo "Error: HTTP Code $httpcode";
     } elseif ($myResult->success !== true) {
-        echo "<span class='error'>Error: $myResult->error</span>";
+        echo "Error: $myResult->error";
     } else {
         echo $myResult->object->model;
+        echo "<BR>";
     }
 }
 ?>
