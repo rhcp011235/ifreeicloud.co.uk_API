@@ -130,7 +130,6 @@ if (isset($_POST['imeis']) && isset($_POST['api-key'])) {
 
         // Check model
         echo "<div class='result-container'>";
-        echo "<h2>IMEI: $imei</h2>";
         echo "<h3>Model Information</h3>";
         echo "<p>";
         check_model($myCheck);
