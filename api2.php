@@ -149,7 +149,6 @@ if (isset($_POST['imeis']) && isset($_POST['api-key'])) {
     </html>";
 }
 
-// Function to check IMEI
 function check_imei($myCheck) {
     $ch = curl_init("https://api.ifreeicloud.co.uk");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck);
@@ -165,9 +164,28 @@ function check_imei($myCheck) {
     } elseif ($myResult->success !== true) {
         echo "<span class='error'>Error: $myResult->error</span>";
     } else {
-        echo $myResult->response;
+        // Format the response
+        $response = $myResult->response;
+
+        // Strip HTML tags for easier processing
+        $responsePlain = strip_tags($response);
+
+        // Normalize newlines
+        $responsePlain = str_replace("\r", "", $responsePlain);
+
+        // Add ✅ for "Find My: ON" and ❌ for "Find My: OFF"
+        if (strpos($responsePlain, "Find My: ON") !== false) {
+            $response = str_replace("Find My: <span style=\"color:red;\">ON</span>", "Find My: ON ❌", $response);
+        } elseif (strpos($responsePlain, "Find My: OFF") !== false) {
+            $response = str_replace("Find My: <span style=\"color:green;\">OFF</span>", "Find My: OFF ✅", $response);
+        }
+
+        // Output the formatted response
+        echo nl2br($response); // Preserve line breaks in HTML
     }
 }
+
+
 
 // Function to check model
 function check_model($myCheck) {
