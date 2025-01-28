@@ -210,33 +210,7 @@ function check_model($myCheck) {
         "imei" => $myCheck['imei']
     ];
 
-    // Set up curl options
-    $options = [
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $myCheck2,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 60,         // Connection timeout in seconds (adjust as needed)
-        CURLOPT_CONNECTTIMEOUT => 60   // Response timeout in seconds (adjust as needed)
-    ];
-
-    try {
-        $ch = curl_init("https://api.ifreeicloud.co.uk");
-        curl_setopt_array($ch, $options);
-        $result = json_decode(curl_exec($ch), true);
-
-        // Add error checking for JSON decoding issues
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception("Invalid JSON response from server: " . json_last_error());
-        }
-
-        echo "<span class='success'>Successfully retrieved model information</span>";
-        echo "<br>";
-        echo $result;
-    } catch (Exception $e) {
-        echo "<span class='error'><strong>Error:</strong> " . $e->getMessage() . "</span>";
-    }
-
-    /*
+    
     $ch = curl_init("https://api.ifreeicloud.co.uk");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $myCheck2);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -253,6 +227,6 @@ function check_model($myCheck) {
     } else {
         echo $myResult->object->model;
     }
-        */
+        
 }
 ?>
