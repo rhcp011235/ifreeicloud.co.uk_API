@@ -199,7 +199,8 @@ function check_model($myCheck) {
     global $apiKeys;
 
     // Add error checking for required keys
-    if (!isset($myCheck['key']) || !isset($myCheck['imei'])) {
+    if (!isset($myCheck['key']) || !isset($myCheck['imei'])) 
+    {
         throw new Exception("Missing required keys: 'key' or 'imei'");
     }
 
@@ -209,20 +210,18 @@ function check_model($myCheck) {
         "imei" => $myCheck['imei']
     ];
 
-    // Use optimal options for curl to preserve newlines and handle XML responses
+    // Set up curl options
     $options = [
-        CURLOPT_POST,
-        $myCheck2,
-        CURLOPT_RETURNTRANSFER,
-        CURLOPT Krhtml, // For XML output
-        CURLOPT_OPTOUTLINES, // Preserve newlines in output
-        60,              // Connection timeout in seconds
-        60               // Response timeout in seconds
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $myCheck2,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 60,         // Connection timeout in seconds (adjust as needed)
+        CURLOPT_CONNECTTIMEOUT => 60   // Response timeout in seconds (adjust as needed)
     ];
 
     try {
         $ch = curl_init("https://api.ifreeicloud.co.uk");
-        curl_setopt($ch, $options);
+        curl_setopt_array($ch, $options);
         $result = json_decode(curl_exec($ch), true);
 
         // Add error checking for JSON decoding issues
@@ -233,10 +232,9 @@ function check_model($myCheck) {
         echo "<span class='success'>Successfully retrieved model information</span>";
         echo "<br>";
         echo $result;
-} catch (Exception $e) {
-    echo "<span class='error'><strong>Error:</strong> " . $e->getMessage() . "</span>";
-}
-
+    } catch (Exception $e) {
+        echo "<span class='error'><strong>Error:</strong> " . $e->getMessage() . "</span>";
+    }
 
     /*
     $ch = curl_init("https://api.ifreeicloud.co.uk");
